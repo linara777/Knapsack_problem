@@ -61,7 +61,7 @@ class MyDataset(Dataset):
             numbers_tree = build_tree([p,w,otn, yy], a)
 
             # Node features
-            x = np.zeros((3, self.item_count)) 1
+            x = np.zeros((3, self.item_count)):
             x[0][:] = w
             x[1][:] = p
             x[2][:] = otn
