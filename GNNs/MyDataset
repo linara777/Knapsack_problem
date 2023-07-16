@@ -1,6 +1,7 @@
 from GNNs.BinarySearchTreeNode import BinarySearchTreeNode
 import spektral
 from spektral.data import Dataset
+import numpy as np
 
 class MyDataset(Dataset):
 
