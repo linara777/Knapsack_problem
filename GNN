@@ -174,3 +174,101 @@ class MyDataset(Dataset):
 
 data = MyDataset(1)
 
+train_mask, val_mask, test_mask = np.zeros(data.n_nodes), np.zeros(data.n_nodes),np.zeros(data.n_nodes)
+
+for i in range(data.n_nodes):
+  if i < data1.n_nodes * 0.4:
+    train_mask[i] = 1
+    val_mask[i] = 0
+    test_mask[i] = 0
+  if i < data.n_nodes * 0.7 and i >= data.n_nodes * 0.4:
+    train_mask[i] = 0
+    val_mask[i] = 1
+    test_mask[i] = 0
+  if i >= data.n_nodes * 0.7:
+    train_mask[i] = 0
+    val_mask[i] = 0
+    test_mask[i] = 1
+
+
+def mask_to_weights(mask):
+    return mask / np.count_nonzero(mask)
+
+weights_tr, weights_va, weights_te = (
+    mask_to_weights(mask)
+    for mask in (train_mask, val_mask, test_mask)
+
+)
+
+channels = 1000  # Number of channels in the first layer
+K = 2  # Max degree of the Chebyshev polynomials
+dropout = 0.49  # Dropout rate for the features
+l2_reg = 2.5e-4  # L2 regularization rate
+learning_rate = 1e-2  # Learning rate
+epochs = 150  # Number of training epochs
+patience = 20  # Patience for early stopping
+a_dtype = data1[0].a.dtype  # Only needed for TF 2.1
+
+N = data1.n_nodes  # Number of nodes in the graph
+F = data1.n_node_features  # Original size of node features
+n_out = 1 # Number of classes
+
+# Model definition
+x_in = Input(shape=(F,))
+a_in = Input((N,), sparse=True, dtype=a_dtype)
+
+
+
+#do_1 = Dropout(dropout)(x_in)
+gc_1 = ChebConv(
+    channels, K=K, activation="relu", kernel_regularizer=l2(l2_reg), use_bias=False
+)([x_in, a_in])
+
+do_2 = Dropout(dropout)(gc_1)
+gc_2 = ChebConv(500, K=K, activation="relu", use_bias=False)([do_2, a_in])
+
+do_3 = Dropout(dropout)(gc_2)
+gc_3 = ChebConv(250, K=K, activation="relu", kernel_regularizer=l2(l2_reg), use_bias=False)([do_3, a_in])
+do_4 = Dropout(dropout)(gc_3)
+gc_4 = ChebConv(100, K=K, activation="relu", use_bias=False)([do_4, a_in])
+
+# Output
+output1 = Flatten()(gc_4)
+ou3 = Dense(600, activation="relu")(output1)
+ou4 = Dense(200, activation="relu")(ou3)
+ou = Dense(20, activation="relu")(ou3)
+ou21 = Dense(8, activation="relu")(ou)
+output = Dense(n_out, activation="sigmoid")(ou21)
+
+
+
+
+
+# Build model
+model = Model(inputs=[x_in, a_in], outputs=output)
+optimizer = Adam()
+model.compile(
+    optimizer=optimizers.RMSprop(lr=0.001),
+    loss=BinaryCrossentropy(),
+    weighted_metrics=[metrics.binary_accuracy],
+)
+model.summary()
+
+loader_tr = SingleLoader(data, sample_weights=weights_tr)
+loader_va = SingleLoader(data, sample_weights=weights_va)
+
+history = model.fit(
+    loader_tr.load(),
+    steps_per_epoch=loader_tr.steps_per_epoch,
+    validation_data=loader_va.load(),
+    validation_steps=loader_va.steps_per_epoch,
+    epochs=epochs,
+    callbacks=[EarlyStopping(patience=patience, restore_best_weights=True)],
+
+)
+
+# Evaluate model
+print("Evaluating model.")
+loader_te = SingleLoader(data, sample_weights=weights_te)
+eval_results = model.evaluate(loader_te.load(), steps=loader_te.steps_per_epoch)
+print("Done.\n" "Test loss: {}\n" "Test accuracy: {}".format(*eval_results))
