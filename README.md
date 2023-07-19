@@ -12,7 +12,7 @@
    * [Getting Started](#getting-started)
    * [Getting Help](#getting-help)
    * [Example: GCN](#example-gcn)
-   * [Написание программы](#Написание_программы)
+   * [Написание программы](#Написание-программы)
    * [Installation](#installation)
        * [Install StellarGraph using PyPI](#install-stellargraph-using-pypi)
        * [Install StellarGraph in Anaconda Python](#install-stellargraph-in-anaconda-python)
