@@ -12,7 +12,7 @@
    * [Getting Started](#getting-started)
    * [Getting Help](#getting-help)
    * [Example: GCN](#example-gcn)
-   * [Algorithms](#algorithms)
+   * [Написание программы](#Написание программы)
    * [Installation](#installation)
        * [Install StellarGraph using PyPI](#install-stellargraph-using-pypi)
        * [Install StellarGraph in Anaconda Python](#install-stellargraph-in-anaconda-python)
@@ -21,3 +21,11 @@
    * [References](#references)
 
 ## Introduction
+
+## Написание программы
+# Метод генерации данных
+- случайным образом создаем данные
+- добавила ограничение, чтобы объектов обоих классов было примерно поровну
+- с помощью метода динамического программирования находим оптимальное подмножество. получаем метки данных для последующего обучения
+нормализуем данные
+
