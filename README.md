@@ -12,7 +12,7 @@
    * [Getting Started](#getting-started)
    * [Getting Help](#getting-help)
    * [Example: GCN](#example-gcn)
-   * [Написание_программы](#Написание_программы)
+   * [Написание программы](#Написание_программы)
    * [Installation](#installation)
        * [Install StellarGraph using PyPI](#install-stellargraph-using-pypi)
        * [Install StellarGraph in Anaconda Python](#install-stellargraph-in-anaconda-python)
@@ -22,7 +22,7 @@
 
 ## Introduction
 
-## Написание_программы
+## Написание программы
 ### Метод генерации данных
 - случайным образом создаем данные
 - добавила ограничение, чтобы объектов обоих классов было примерно поровну
