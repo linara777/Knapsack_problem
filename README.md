@@ -7,19 +7,6 @@
 
 В целом задача о рюкзаке представляет собой полезную основу для оптимизации портфеля и распределения активов, позволяя инвесторам принимать обоснованные решения о том, как распределить свои ресурсы для получения максимальной прибыли и минимального риска.
 
-## Оглавление
-   * [Introduction](#introduction)
-   * [Getting Started](#getting-started)
-   * [Getting Help](#getting-help)
-   * [Example: GCN](#example-gcn)
-   * [Написание программы](#Написание-программы)
-   * [Installation](#installation)
-       * [Install StellarGraph using PyPI](#install-stellargraph-using-pypi)
-       * [Install StellarGraph in Anaconda Python](#install-stellargraph-in-anaconda-python)
-       * [Install StellarGraph from GitHub source](#install-stellargraph-from-github-source)
-   * [Citing](#citing)
-   * [References](#references)
-
 ## Introduction
 
 ## Написание программы
