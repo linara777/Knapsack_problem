@@ -9,8 +9,8 @@
 
 ## Table of Contents
    * [GNN](#GNN)
-   * [LSTM](#LSTM)
    * [CNN](#CNN)
+   * [LSTM](#LSTM)
 
 
 ## GNN
@@ -41,6 +41,8 @@
 ### Оценка результатов
 Оценила модель на тестовых данных, используя "evaluate"
 
-## LSTM
+
 
 ## CNN
+
+## LSTM
